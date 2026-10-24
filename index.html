@@ -490,7 +490,7 @@ const I18N = {
     notesLbl: "Notes for the journal", notesPh: "Why this trade, where the zone is, what would kill it",
     save: "Save to history", reset: "Reset checklist", saved: "Saved to history", saveFail: "Couldn't save: this browser blocks storage",
     histH1a: "Trade", histH1b: "History", histP: "Every checklist you saved on this device, newest first. Set the result when the trade closes and the dashboard updates.",
-    emptyH: "Nothing saved yet", emptyP: "Fill in the checklist and hit Save to history. The example below shows how a saved trade looks.",
+    emptyH: "Nothing saved yet", emptyP: "Fill in the checklist and hit Save trade. Your trades show up here and on the dashboard.",
     example: "example", rulesOk: "All rules green", rulesNo: "Rules not met",
     win: "Win", loss: "Loss", pending: "Pending", pnlLbl: "Result ($)", del: "Delete",
     dashH1a: "Trading", dashH1b: "Dashboard", dashP: "Your trading performance at a glance.",
@@ -532,7 +532,7 @@ const I18N = {
     notesLbl: "Notas para el diario", notesPh: "Por qué esta operación, dónde está la zona, qué la invalidaría",
     save: "Guardar en el historial", reset: "Reiniciar checklist", saved: "Guardado en el historial", saveFail: "No se pudo guardar: este navegador bloquea el almacenamiento",
     histH1a: "Historial", histH1b: "de trades", histP: "Cada checklist que guardaste en este dispositivo, el más nuevo primero. Pon el resultado cuando cierre la operación y el panel se actualiza.",
-    emptyH: "Todavía no hay nada", emptyP: "Llena el checklist y dale a Guardar en el historial. Abajo hay un ejemplo de cómo se ve una operación guardada.",
+    emptyH: "Todavía no hay nada", emptyP: "Llena el checklist y dale a Guardar operación. Tus operaciones aparecen aquí y en el panel.",
     example: "ejemplo", rulesOk: "Todas las reglas en verde", rulesNo: "No cumplió las reglas",
     win: "Ganada", loss: "Perdida", pending: "Pendiente", pnlLbl: "Resultado ($)", del: "Borrar",
     dashH1a: "Panel de", dashH1b: "Trading", dashP: "Tu rendimiento de un vistazo.",
@@ -574,7 +574,7 @@ const I18N = {
     notesLbl: "Notas para o diário", notesPh: "Por que este trade, onde está a zona, o que invalidaria",
     save: "Salvar no histórico", reset: "Zerar checklist", saved: "Salvo no histórico", saveFail: "Não deu para salvar: este navegador bloqueia o armazenamento",
     histH1a: "Histórico", histH1b: "de trades", histP: "Todo checklist salvo neste aparelho, do mais novo ao mais antigo. Coloque o resultado quando o trade fechar e o painel atualiza.",
-    emptyH: "Nada salvo ainda", emptyP: "Preencha o checklist e toque em Salvar no histórico. Abaixo tem um exemplo de como fica um trade salvo.",
+    emptyH: "Nada salvo ainda", emptyP: "Preencha o checklist e toque em Salvar trade. Os seus trades aparecem aqui e no painel.",
     example: "exemplo", rulesOk: "Todas as regras verdes", rulesNo: "Regras não cumpridas",
     win: "Gain", loss: "Loss", pending: "Pendente", pnlLbl: "Resultado ($)", del: "Apagar",
     dashH1a: "Painel de", dashH1b: "Trading", dashP: "O seu desempenho num relance.",
@@ -700,7 +700,7 @@ function sampleTrades() {
 
 // ---------- history render ----------
 function renderHist() {
-  let h = loadH(); const sample = !h.length; if (sample) h = sampleTrades().slice(0, 1);
+  const h = loadH(); const sample = !h.length;
   $("#hist").innerHTML = (sample ? `<div class="empty"><b>${T.emptyH}</b>${T.emptyP}</div>` : "") +
     h.map((x, i) => {
       const r = x.result || "pending";
@@ -746,7 +746,7 @@ function stats(trades) {
   };
 }
 function renderDash() {
-  let trades = loadH(); const sample = !trades.length; if (sample) trades = sampleTrades();
+  let trades = loadH();
   trades = trades.map((t) => ({ ...t, result: t.result || "pending", pnl: t.pnl || 0 }));
   const s = stats(trades), sign = (v) => (v > 0 ? "pos" : v < 0 ? "neg" : "");
   // calendar
@@ -764,7 +764,6 @@ function renderDash() {
   const monthName = calMonth.toLocaleDateString(LOCALE[LANG], { month: "long", year: "numeric" });
   const recent = [...trades].sort((a, b) => b.ts - a.ts).slice(0, 6);
   $("#dash").innerHTML = `
-    ${sample ? `<div class="banner">${T.sampleBanner}</div>` : ""}
     <div class="dtop">
       <div class="dnet"><div class="kk">${T.net}</div><div class="big ${sign(s.net)}">${money(s.net, true)}</div><div class="sm">${T.done(s.closed.length)}</div>
         <div class="trio"><div><div class="kk">${T.winRate}</div><div class="vv">${s.winRate}%</div></div><div><div class="kk">${T.pf}</div><div class="vv">${s.pf}</div></div><div><div class="kk">${T.avgConf}</div><div class="vv">${s.avgConf}%</div></div></div></div>
@@ -841,8 +840,6 @@ $("#reset").addEventListener("click", () => { state.on = {}; state.open = null; 
 
 function __init() {
 // open in a realistic working state: an example read already ticked (Reset clears it)
-["W:trend", "W:aoi", "D:trend", "D:aoi", "D:rej", "H4:trend", "H4:prev"].forEach((x) => (state.on[x] = true));
-state.pair = "AUDJPY"; state.dir = "SELL";
 applyLang();
 setView(location.hash === "#history" ? "hist" : location.hash === "#dashboard" ? "dash" : "check");
 }
