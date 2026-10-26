@@ -469,7 +469,7 @@ const I18N = {
     navCheck: "Checklist", navHist: "History", navDash: "Dashboard", brand: "Live trading checklist",
     heroP: "Tick what is actually on the chart, timeframe by timeframe. No trade until the stop loss and take profit are set and the rules light up green.",
     tag: "ZONE · SIGNAL · STOP", h1a: "The Perfect", h1b: "Trade",
-    pairLbl: "Pair (our 22 only)", dirLbl: "Direction", buy: "Buy", sell: "Sell",
+    pairLbl: "Pair (our 23 only)", dirLbl: "Direction", buy: "Buy", sell: "Sell",
     conf: "confluence", total: "Total", yes: "Yes", no: "No", set: "SET",
     sec: { W: ["Weekly", "Direction + big zones"], D: ["Daily", "Trend agreement + zones"], H4: ["4H", "Refine the zone"], LTF: ["2H · 1H · 30m", "Lower timeframe"], ENTRY: ["Entry Signal", "The trigger"], RISK: ["Stop Loss & Take Profit", "Required before entry"] },
     it: { trend: "Trend", aoi: "At AOI / Rejected", ema: "Touching EMA", round: "Round Psychological Level", prev: "Rejection from Previous Structure", rej: "Candlestick Rejection from AOI", bnr: "Break & Retest / Head & Shoulders Pattern", sos: "SOS", sosSub: "Shift of structure your way", eng: "Engulfing candlestick (30m, 1H, 2H, 4H)", sl: "Stop Loss", tp: "Take Profit", req: "Required" },
@@ -511,7 +511,7 @@ const I18N = {
     navCheck: "Checklist", navHist: "Historial", navDash: "Panel", brand: "Checklist de trading en vivo",
     heroP: "Marca solo lo que de verdad está en el gráfico, temporalidad por temporalidad. No hay operación hasta que el stop loss y el take profit estén puestos y las reglas se pongan en verde.",
     tag: "ZONA · SEÑAL · STOP", h1a: "The Perfect", h1b: "Trade",
-    pairLbl: "Par (solo nuestros 22)", dirLbl: "Dirección", buy: "Compra", sell: "Venta",
+    pairLbl: "Par (solo nuestros 23)", dirLbl: "Dirección", buy: "Compra", sell: "Venta",
     conf: "de confluencia", total: "Total", yes: "Sí", no: "No", set: "LISTO",
     sec: { W: ["Semanal", "Dirección + zonas grandes"], D: ["Diario", "Tendencia alineada + zonas"], H4: ["4H", "Afinar la zona"], LTF: ["2H · 1H · 30m", "Temporalidad baja"], ENTRY: ["Señal de entrada", "El gatillo"], RISK: ["Stop Loss y Take Profit", "Obligatorio antes de entrar"] },
     it: { trend: "Tendencia", aoi: "En la zona de interés / rechazo", ema: "Tocando la EMA", round: "Nivel psicológico redondo", prev: "Rechazo de una estructura anterior", rej: "Vela de rechazo en la zona", bnr: "Ruptura y retesteo / Hombro-cabeza-hombro", sos: "SOS", sosSub: "Cambio de estructura a tu favor", eng: "Vela envolvente (30m, 1H, 2H, 4H)", sl: "Stop Loss", tp: "Take Profit", req: "Obligatorio" },
@@ -553,7 +553,7 @@ const I18N = {
     navCheck: "Checklist", navHist: "Histórico", navDash: "Painel", brand: "Checklist de trading ao vivo",
     heroP: "Marque só o que está de verdade no gráfico, tempo gráfico por tempo gráfico. Nada de trade até o stop loss e o take profit estarem definidos e as regras ficarem verdes.",
     tag: "ZONA · SINAL · STOP", h1a: "The Perfect", h1b: "Trade",
-    pairLbl: "Par (só os nossos 22)", dirLbl: "Direção", buy: "Compra", sell: "Venda",
+    pairLbl: "Par (só os nossos 23)", dirLbl: "Direção", buy: "Compra", sell: "Venda",
     conf: "de confluência", total: "Total", yes: "Sim", no: "Não", set: "OK",
     sec: { W: ["Semanal", "Direção + zonas grandes"], D: ["Diário", "Tendência alinhada + zonas"], H4: ["4H", "Refinar a zona"], LTF: ["2H · 1H · 30m", "Tempo gráfico menor"], ENTRY: ["Sinal de entrada", "O gatilho"], RISK: ["Stop Loss e Take Profit", "Obrigatório antes de entrar"] },
     it: { trend: "Tendência", aoi: "Na zona de interesse / rejeição", ema: "Tocando a EMA", round: "Nível psicológico redondo", prev: "Rejeição de estrutura anterior", rej: "Candle de rejeição na zona", bnr: "Rompimento e reteste / Ombro-cabeça-ombro", sos: "SOS", sosSub: "Mudança de estrutura a seu favor", eng: "Candle de engolfo (30m, 1H, 2H, 4H)", sl: "Stop Loss", tp: "Take Profit", req: "Obrigatório" },
@@ -613,7 +613,7 @@ const SECTIONS = [
   { key: "RISK", n: "06", req: true, items: [["sl", 0], ["tp", 0]] },
 ];
 const MAX = SECTIONS.reduce((a, s) => a + s.items.reduce((b, i) => b + i[1], 0), 0);
-const PAIRS = ["XAUUSD","NAS100","BTCUSD","EURUSD","GBPUSD","AUDUSD","NZDUSD","USDCAD","USDCHF","USDJPY","EURJPY","GBPJPY","AUDJPY","NZDJPY","CADJPY","EURGBP","EURAUD","GBPNZD","GBPCAD","GBPCHF","AUDCAD","NZDCAD"];
+const PAIRS = ["XAUUSD","NAS100","BTCUSD","EURUSD","GBPUSD","AUDUSD","NZDUSD","USDCAD","USDCHF","USDJPY","EURJPY","GBPJPY","AUDJPY","NZDJPY","CADJPY","EURGBP","EURAUD","GBPAUD","GBPNZD","GBPCAD","GBPCHF","AUDCAD","NZDCAD"];
 
 const state = { on: {}, open: null, pair: "", dir: "", view: "check" };
 const $ = (s) => document.querySelector(s);
@@ -829,7 +829,7 @@ function setView(v) {
 document.addEventListener("click", (e) => {
   const t = e.target.closest("button"); if (!t) return;
   if (t.dataset.view) return setView(t.dataset.view);
-  if (t.dataset.lang) { LANG = t.dataset.lang; store.set("tpt-lang", LANG); return applyLang(); }
+  if (t.dataset.lang) { LANG = t.dataset.lang; store.set("tpt-lang", LANG); applyLang(); if (typeof renderPrefillBanner === "function") renderPrefillBanner(); return; }
   if (t.dataset.k) { const key = t.dataset.k; if (state.on[key]) { delete state.on[key]; state.open = null; } else state.open = state.open === key ? null : key; renderCheck(); }
   else if (t.dataset.yes) { state.on[t.dataset.yes] = true; state.open = null; renderCheck(); }
   else if (t.dataset.no) { delete state.on[t.dataset.no]; state.open = null; renderCheck(); }
@@ -902,6 +902,7 @@ function openSave() {
   M.dir = state.dir === "SELL" ? "SHORT" : "LONG"; M.img = "";
   const lastBal = store.get("tpt-balance", ""); mf("st-bal").value = lastBal;
   ["st-sl", "st-tp", "st-entry", "st-notes"].forEach((id) => (mf(id).value = "")); mf("st-risk").value = store.get("tpt-risk", "");
+  if (PREFILL && PREFILL.pair === mf("st-pair").value) { if (PREFILL.entry) mf("st-entry").value = PREFILL.entry; if (PREFILL.sl) mf("st-sl").value = PREFILL.sl; if (PREFILL.tp) mf("st-tp").value = PREFILL.tp; }
   mf("st-prev").hidden = true; mf("st-prev").removeAttribute("src"); mf("st-err").textContent = "";
   document.querySelectorAll(".mb .bad").forEach((el) => el.classList.remove("bad"));
   const ph = spec(mf("st-pair").value).dec; ["st-sl", "st-tp", "st-entry"].forEach((id) => (mf(id).step = "any"));
@@ -959,6 +960,38 @@ mf("st-form").addEventListener("submit", (e) => {
 });
 
 window.renderModalText = renderModalText;
+
+// ---------- pre-fill from the Forex Trading Desk ("Open in my checklist") ----------
+// The Desk links here as  #prefill=<base64 JSON {pair, dir, on:[box ids], entry, sl, tp, score, tier, at}>
+let PREFILL = null;
+const PF_TXT = {
+  en: (n, sc, tr, at) => `<b>Pre-filled by your Forex Trading Desk</b> (${at}): ${n} boxes ticked, Desk score ${sc}% · ${tr}. Check every box against your chart and untick anything you don't agree with, then Save trade. Add your profit or loss later in History.`,
+  es: (n, sc, tr, at) => `<b>Completado por tu Forex Trading Desk</b> (${at}): ${n} casillas marcadas, puntaje ${sc}% · ${tr}. Revisa cada casilla con tu gráfico y desmarca lo que no veas, luego Guarda la operación. Agrega tu ganancia o pérdida después en Historial.`,
+  pt: (n, sc, tr, at) => `<b>Preenchido pelo seu Forex Trading Desk</b> (${at}): ${n} caixas marcadas, pontuação ${sc}% · ${tr}. Confira cada caixa no seu gráfico e desmarque o que não concordar, depois Salve o trade. Adicione seu lucro ou prejuízo depois no Histórico.`,
+};
+function applyPrefill() {
+  const m = location.hash.match(/^#prefill=([A-Za-z0-9_\-=]+)/);
+  if (!m) return;
+  try {
+    const raw = atob(m[1].replace(/-/g, "+").replace(/_/g, "/"));
+    const j = JSON.parse(decodeURIComponent(Array.from(raw, (c) => "%" + c.charCodeAt(0).toString(16).padStart(2, "0")).join("")));
+    const valid = new Set(SECTIONS.flatMap((sec) => sec.items.map(([id]) => k(sec, id))));
+    state.on = {}; (j.on || []).forEach((id) => { if (valid.has(id)) state.on[id] = true; });
+    if (j.pair) { if (!PAIRS.includes(j.pair)) PAIRS.push(j.pair); state.pair = j.pair; }
+    if (j.dir === "BUY" || j.dir === "SELL") state.dir = j.dir;
+    PREFILL = j;
+    const div = document.createElement("div"); div.id = "pf-banner"; div.setAttribute("role", "status");
+    div.style.cssText = "margin:12px 0;padding:12px 14px;border-radius:12px;border:1px solid #2ee6b0;background:rgba(46,230,176,.10);font-size:14px;line-height:1.45";
+    div.dataset.n = Object.keys(state.on).length;
+    $("#view-check").prepend(div); renderPrefillBanner();
+  } catch (err) { console.warn("prefill ignored", err); }
+  try { history.replaceState(null, "", location.pathname); } catch {}
+}
+function renderPrefillBanner() {
+  const d = document.getElementById("pf-banner"); if (!d || !PREFILL) return;
+  d.innerHTML = (PF_TXT[LANG] || PF_TXT.en)(d.dataset.n, PREFILL.score ?? "—", esc(PREFILL.tier || ""), esc(PREFILL.at || ""));
+}
+applyPrefill();
 __init();
 </script>
 </body>
